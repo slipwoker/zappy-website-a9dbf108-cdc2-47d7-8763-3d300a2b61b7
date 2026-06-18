@@ -1,0 +1,1567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <title>Secure Your Property Future — Keystone Legal</title>
+    <meta name="description" content="Protect your biggest investment with affordable legal services from Keystone Legal. Expert real estate law counsel for transactions, disputes, and more. Get a free consultation today.">
+    <meta name="keywords" content="affordable legal services, real estate law, real estate lawyer cost, property legal counsel, real estate dispute attorney">
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon-512x512.png">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+    <!-- Zappy Analytics -->
+<script>
+(function() {
+  'use strict';
+  
+  // Configuration
+  var config = {
+    websiteId: 'a9dbf108-cdc2-47d7-8763-3d300a2b61b7',
+    apiUrl: 'https://qaapi.zappy5.com/api/analytics/track',
+    sessionDuration: 30 * 60 * 1000, // 30 minutes
+    visitorDuration: 30 * 24 * 60 * 60 * 1000, // 30 days
+    trackPageViews: true,
+    trackClicks: true,
+    trackFormSubmissions: true
+  };
+  
+  // Generate or retrieve persistent visitor ID (30 days)
+  function getVisitorId() {
+    var visitorKey = 'zappy_visitor_' + config.websiteId;
+    var visitor = null;
+    
+    try {
+      visitor = localStorage.getItem(visitorKey);
+      if (visitor) {
+        var visitorData = JSON.parse(visitor);
+        var now = Date.now();
+        
+        // Check if visitor ID is still valid (30 days)
+        if (now - visitorData.created < config.visitorDuration) {
+          // Update last seen timestamp
+          visitorData.lastSeen = now;
+          localStorage.setItem(visitorKey, JSON.stringify(visitorData));
+          return visitorData.id;
+        }
+      }
+    } catch (e) {
+      console.warn('Zappy Analytics: LocalStorage not available');
+    }
+    
+    // Generate new visitor ID
+    var newVisitorId = 'zv_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    
+    try {
+      localStorage.setItem(visitorKey, JSON.stringify({
+        id: newVisitorId,
+        created: Date.now(),
+        lastSeen: Date.now()
+      }));
+    } catch (e) {
+      // Continue without local storage
+    }
+    
+    return newVisitorId;
+  }
+  
+  // Generate or retrieve session ID (30 minutes)
+  function getSessionId() {
+    var sessionKey = 'zappy_session_' + config.websiteId;
+    var session = null;
+    
+    try {
+      session = sessionStorage.getItem(sessionKey);
+      if (session) {
+        var sessionData = JSON.parse(session);
+        var now = Date.now();
+        
+        // Check if session is still valid
+        if (now - sessionData.timestamp < config.sessionDuration) {
+          // Update timestamp
+          sessionData.timestamp = now;
+          sessionStorage.setItem(sessionKey, JSON.stringify(sessionData));
+          return sessionData.id;
+        }
+      }
+    } catch (e) {
+      console.warn('Zappy Analytics: SessionStorage not available');
+    }
+    
+    // Generate new session ID
+    var newSessionId = 'zs_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    
+    try {
+      sessionStorage.setItem(sessionKey, JSON.stringify({
+        id: newSessionId,
+        timestamp: Date.now()
+      }));
+    } catch (e) {
+      // Continue without session storage
+    }
+    
+    return newSessionId;
+  }
+  
+  var visitorId = getVisitorId();
+  var sessionId = getSessionId();
+  
+  // Site Optimization Agent — visual heatmap helpers
+  function getBandAnchor(el) {
+    var node = el;
+    while (node && node !== document.body) {
+      if (node.getAttribute && node.getAttribute('data-band-index') != null) {
+        return { bandIndex: node.getAttribute('data-band-index'), sectionId: node.id || null };
+      }
+      node = node.parentElement;
+    }
+    node = el;
+    while (node && node !== document.body) {
+      if (node.tagName === 'SECTION' && node.id) {
+        return { bandIndex: null, sectionId: node.id };
+      }
+      node = node.parentElement;
+    }
+    return { bandIndex: null, sectionId: null };
+  }
+  function heatmapFields(el, e) {
+    var anchor = getBandAnchor(el);
+    return {
+      x: Math.round((e && e.pageX) || 0),
+      y: Math.round((e && e.pageY) || 0),
+      bandIndex: anchor.bandIndex,
+      sectionId: anchor.sectionId
+    };
+  }
+  function mergeFields(base, extra) {
+    for (var k in extra) { if (Object.prototype.hasOwnProperty.call(extra, k)) base[k] = extra[k]; }
+    return base;
+  }
+  // Track an event
+  function trackEvent(eventType, data) {
+    data = data || {};
+    
+    var eventData = {
+      website_id: config.websiteId,
+      event_type: eventType,
+      page_path: window.location.pathname,
+      referrer: document.referrer || 'direct',
+      visitor_id: visitorId,
+      session_id: sessionId,
+      metadata: data
+    };
+    
+    // Use sendBeacon if available (better for page unload events)
+    if (navigator.sendBeacon) {
+      var blob = new Blob([JSON.stringify(eventData)], { type: 'application/json' });
+      navigator.sendBeacon(config.apiUrl, blob);
+    } else {
+      // Fallback to fetch
+      fetch(config.apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(eventData),
+        keepalive: true
+      }).catch(function(error) {
+        console.warn('Zappy Analytics: Failed to track event', error);
+      });
+    }
+  }
+  
+  // Track page view
+  if (config.trackPageViews) {
+    trackEvent('pageview', {
+      title: document.title,
+      url: window.location.href
+    });
+  }
+  
+  // Track clicks on important elements
+  if (config.trackClicks) {
+    document.addEventListener('click', function(e) {
+      var target = e.target;
+      
+      // Track button clicks (counted as actions)
+      if (target.tagName === 'BUTTON' || target.closest('button')) {
+        var button = target.tagName === 'BUTTON' ? target : target.closest('button');
+        var clickMeta = {
+          element: 'button',
+          text: button.textContent.trim().substring(0, 100),
+          id: button.id || null,
+          class: button.className || null
+        };
+        mergeFields(clickMeta, heatmapFields(button, e));
+        trackEvent('click', clickMeta);
+      }
+      
+      // Track link clicks (navigation - not counted as actions)
+      else if (target.tagName === 'A' || target.closest('a')) {
+        var link = target.tagName === 'A' ? target : target.closest('a');
+        var navMeta = {
+          element: 'link',
+          text: link.textContent.trim().substring(0, 100),
+          href: link.href,
+          external: link.hostname !== window.location.hostname
+        };
+        mergeFields(navMeta, heatmapFields(link, e));
+        trackEvent('navigation', navMeta);
+      }
+    }, true);
+  }
+  
+  // Track scroll depth milestones (visual heatmap reach signal)
+  (function() {
+    var milestones = [25, 50, 75, 100];
+    var fired = {};
+    var maxDepth = 0;
+    function computeDepth() {
+      var doc = document.documentElement;
+      var scrollable = (doc.scrollHeight - window.innerHeight);
+      if (scrollable <= 0) return 100;
+      return Math.min(100, Math.round(((window.scrollY || window.pageYOffset || 0) / scrollable) * 100));
+    }
+    var ticking = false;
+    function onScroll() {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(function() {
+        var depth = computeDepth();
+        if (depth > maxDepth) maxDepth = depth;
+        for (var i = 0; i < milestones.length; i++) {
+          var m = milestones[i];
+          if (depth >= m && !fired[m]) {
+            fired[m] = true;
+            trackEvent('scroll_depth', { milestone: m, maxDepthPct: maxDepth });
+          }
+        }
+        ticking = false;
+      });
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+  })();
+  
+  // Track form submissions
+  if (config.trackFormSubmissions) {
+    document.addEventListener('submit', function(e) {
+      var form = e.target;
+      
+      trackEvent('form_submit', {
+        form_id: form.id || null,
+        form_name: form.name || null,
+        form_action: form.action || null,
+        form_method: form.method || 'GET'
+      });
+    }, true);
+  }
+  
+  // Track time on page (send on page unload)
+  var pageLoadTime = Date.now();
+  
+  window.addEventListener('beforeunload', function() {
+    var timeOnPage = Math.floor((Date.now() - pageLoadTime) / 1000); // in seconds
+    
+    trackEvent('page_unload', {
+      time_on_page: timeOnPage,
+      page_path: window.location.pathname
+    });
+  });
+  
+  // Expose tracking function globally for custom events
+  window.zappyAnalytics = {
+    track: trackEvent,
+    getVisitorId: function() { return visitorId; },
+    getSessionId: function() { return sessionId; }
+  };
+  
+})();
+</script>
+<!-- End Zappy Analytics -->
+    <meta property="og:title" content="Secure Your Property Future — Keystone Legal">
+    <meta property="og:description" content="Protect your biggest investment with affordable legal services from Keystone Legal. Expert real estate law counsel for transactions, disputes, and more. Get a free consultation today.">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Secure Your Property Future — Keystone Legal">
+    <meta name="twitter:description" content="Protect your biggest investment with affordable legal services from Keystone Legal. Expert real estate law counsel for transactions, disputes, and more. Get a free consultation today.">
+    <meta property="og:type" content="website">
+  <meta property="og:locale" content="en_US">
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&amp;family=Inter:wght@400;500;600;700&amp;display=swap">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <style>
+    .skip-link { position: absolute; top: 0; left: 0; transform: translateY(-200%); padding: 12px 18px; background: var(--bg-dark, #1a1a1a); color: var(--text-light, #fff); font-weight: 600; border-radius: 0 0 8px 0; z-index: 10000; }
+    .skip-link:focus { transform: none; outline: 2px solid var(--ring, #fff); outline-offset: 2px; }
+    :focus-visible { outline: 2px solid var(--ring, currentColor); outline-offset: 3px; }
+  </style>
+
+
+  
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="/assets/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/assets/favicon-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="/assets/favicon-512x512.png">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+    <!-- Cookie Consent -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.css" />
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-cookieconsent@3/dist/cookieconsent.umd.js"></script>
+    <!-- Mickidum Accessibility Toolbar -->
+    <script src="https://cdn.jsdelivr.net/gh/mickidum/acc_toolbar/acctoolbar/acctoolbar.min.js"></script>
+    <link rel="stylesheet" href="/styles.css">
+    <script>window.ZAPPY_WEBSITE_ID = "a9dbf108-cdc2-47d7-8763-3d300a2b61b7"; window.ZAPPY_API_BASE = "https://qaapi.zappy5.com";</script>
+
+    <style id="zappy-dropdown-submenu-styles">
+      /* ========== DESKTOP DROPDOWN SUBMENU STYLES ========== */
+      /* Base styles for dropdown submenus - parent must be positioned */
+      .nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu) { position: relative; }
+      /* Submenu base - hidden by default */
+      .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu { display: block !important; position: absolute !important; top: 100%; left: 0; min-width: 220px; background: white; border-radius: 8px; box-shadow: 0 8px 25px rgba(0,0,0,0.15); padding: 8px 0; opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.3s ease; z-index: 1000; list-style: none; pointer-events: none; }
+      /* CRITICAL: Desktop hover styles to show dropdown */
+      .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
+      /* Submenu item styling */
+      .sub-menu li { list-style: none; margin: 0; padding: 0; }
+      .sub-menu a { display: block !important; padding: 10px 16px !important; color: var(--text-dark, #333) !important; font-weight: 500; text-decoration: none; white-space: nowrap; transition: background-color 0.2s; }
+      .sub-menu .zappy-nav-child > a { padding-left: 28px !important; font-size: 0.9em !important; opacity: 0.85 !important; }
+      [dir="rtl"] .sub-menu .zappy-nav-child > a, html[lang="he"] .sub-menu .zappy-nav-child > a, html[lang="ar"] .sub-menu .zappy-nav-child > a { padding-left: 10px !important; padding-right: 28px !important; }
+      .sub-menu .zappy-nav-parent > a { font-weight: 600 !important; }
+      .sub-menu a:hover { background-color: #f5f5f5; }
+      /* RTL (Hebrew/Arabic) dropdown positioning */
+      [dir="rtl"] .nav-menu .sub-menu, [dir="rtl"] nav .sub-menu, [dir="rtl"] .navbar .sub-menu, html[lang="he"] .nav-menu .sub-menu, html[lang="he"] nav .sub-menu, html[lang="he"] .navbar .sub-menu, html[lang="ar"] .nav-menu .sub-menu, html[lang="ar"] nav .sub-menu, html[lang="ar"] .navbar .sub-menu { left: auto !important; right: 0 !important; }
+      /* Hide empty dropdown menus (exclude catalog sub-menus that use <a> children instead of <li>) */
+      .sub-menu:empty, .sub-menu:not(:has(li:not(.zappy-hidden-menu-item))):not(:has(> a)), .sub-menu:not(:has(li)):not(:has(> a)) { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
+      /* Desktop: show submenu on Menu Group hover */
+      li:has(.menu-group-title):hover > .sub-menu { opacity: 1 !important; visibility: visible !important; transform: translateY(0) !important; pointer-events: auto !important; }
+      /* Menu Group title styling */
+      .nav-menu > li > .menu-group-title, #navMenu > li > .menu-group-title { display: inline-block; padding: 0.5rem 1rem; cursor: default; user-select: none; }
+      
+      /* ========== MOBILE SUBMENU STYLES ========== */
+      @media (max-width: 768px) {
+        .nav-menu .sub-menu, nav .sub-menu, .navbar .sub-menu, #navMenu .sub-menu { position: static !important; transform: none !important; box-shadow: none !important; background: transparent !important; max-height: 0; overflow: hidden; opacity: 0; visibility: hidden; transition: max-height 0.3s ease, opacity 0.3s ease; padding: 0 !important; border-radius: 0 !important; }
+        .navbar .sub-menu.mobile-expanded, .nav-menu .sub-menu.mobile-expanded, #navMenu .sub-menu.mobile-expanded { max-height: none !important; overflow-y: visible !important; opacity: 1 !important; visibility: visible !important; padding: 8px 0 8px 16px !important; }
+        [dir="rtl"] .sub-menu.mobile-expanded, html[lang="he"] .sub-menu.mobile-expanded { padding: 8px 16px 8px 0 !important; }
+        /* Disable hover behavior on mobile */
+        .nav-menu li:hover > .sub-menu, nav li:hover > .sub-menu, .navbar li:hover > .sub-menu, #navMenu li:hover > .sub-menu { opacity: 0; visibility: hidden; pointer-events: none; }
+        .nav-menu li > .sub-menu.mobile-expanded, nav li > .sub-menu.mobile-expanded, .navbar li > .sub-menu.mobile-expanded, #navMenu li > .sub-menu.mobile-expanded { opacity: 1 !important; visibility: visible !important; pointer-events: auto !important; }
+        .nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu) { display: flex !important; flex-wrap: wrap !important; align-items: center !important; position: relative !important; min-height: 44px !important; }
+        .nav-menu li:has(.sub-menu) > a, nav li:has(.sub-menu) > a, .navbar li:has(.sub-menu) > a, #navMenu li:has(.sub-menu) > a { flex: 1 !important; min-width: 0 !important; }
+        .nav-menu li:has(.sub-menu) > .menu-group-title, nav li:has(.sub-menu) > .menu-group-title, .navbar li:has(.sub-menu) > .menu-group-title, #navMenu li:has(.sub-menu) > .menu-group-title { flex: 1 !important; min-width: 0 !important; padding: 0 !important; line-height: inherit !important; }
+        .nav-menu li:has(.sub-menu) > .sub-menu, nav li:has(.sub-menu) > .sub-menu, .navbar li:has(.sub-menu) > .sub-menu, #navMenu li:has(.sub-menu) > .sub-menu { flex-basis: 100% !important; width: 100% !important; }
+        .nav-menu li:has(.sub-menu) > a [class*="chevron"], .nav-menu li:has(.sub-menu) > a [class*="arrow"], .nav-menu li:has(.sub-menu) > a .fa-chevron-down, .nav-menu li:has(.sub-menu) > a .fa-angle-down, nav li:has(.sub-menu) > a [class*="chevron"], nav li:has(.sub-menu) > a [class*="arrow"], #navMenu li:has(.sub-menu) > a [class*="chevron"], #navMenu li:has(.sub-menu) > a [class*="arrow"] { display: none !important; visibility: hidden !important; }
+        .mobile-submenu-toggle { display: flex !important; align-items: center !important; justify-content: center !important; width: 44px !important; height: auto !important; background: transparent !important; border: none !important; cursor: pointer !important; color: var(--text-light) !important; position: static !important; flex-shrink: 0 !important; align-self: stretch !important; z-index: 2 !important; padding: 0 !important; margin: 0 !important; }
+        .mobile-submenu-toggle::after { content: '' !important; width: 0 !important; height: 0 !important; border-left: 6px solid transparent !important; border-right: 6px solid transparent !important; border-top: 7px solid currentColor !important; transition: transform 0.3s ease !important; }
+        .mobile-submenu-toggle.expanded::after { transform: rotate(180deg) !important; }
+        .sub-menu a { padding: 10px 0 !important; display: block !important; color: var(--text-light) !important; white-space: normal !important; }
+        .sub-menu .zappy-nav-child > a { padding-left: 28px !important; font-size: 0.9em !important; opacity: 0.85 !important; }
+        [dir="rtl"] .sub-menu .zappy-nav-child > a, html[lang="he"] .sub-menu .zappy-nav-child > a, html[lang="ar"] .sub-menu .zappy-nav-child > a { padding-left: 0 !important; padding-right: 28px !important; }
+        .sub-menu .zappy-nav-parent > a { font-weight: 600 !important; }
+        .nav-menu.active, #navMenu.active { max-width: 100vw !important; overflow-x: hidden !important; box-sizing: border-box !important; }
+        .navbar .sub-menu li a, nav.navbar .sub-menu li a, .zappy-products-dropdown .sub-menu a { color: var(--text-light) !important; }
+      }
+      @media (min-width: 769px) { .mobile-submenu-toggle { display: none !important; } }
+    </style>
+
+    <style id="zappy-widget-visibility">
+      html[dir="rtl"] .whatsapp-float { right: 20px !important; left: auto !important; }
+      html[dir="ltr"] .whatsapp-float, html:not([dir]) .whatsapp-float { left: 20px !important; right: auto !important; }
+      html[dir="rtl"] #mic-access-tool-general-button, html[dir="rtl"] .mic-access-tool-general-button,
+      html[dir="rtl"] #mic-init-access-tool .mic-access-tool-general-button,
+      html[dir="rtl"] #mic-init-access-tool #mic-access-tool-general-button,
+      html[dir="rtl"] ._access-icon { left: 20px !important; right: auto !important; }
+      html[dir="ltr"] #mic-access-tool-general-button, html[dir="ltr"] .mic-access-tool-general-button,
+      html[dir="ltr"] #mic-init-access-tool .mic-access-tool-general-button,
+      html[dir="ltr"] #mic-init-access-tool #mic-access-tool-general-button,
+      html[dir="ltr"] ._access-icon,
+      html:not([dir]) #mic-access-tool-general-button, html:not([dir]) .mic-access-tool-general-button,
+      html:not([dir]) #mic-init-access-tool .mic-access-tool-general-button,
+      html:not([dir]) #mic-init-access-tool #mic-access-tool-general-button,
+      html:not([dir]) ._access-icon { right: 20px !important; left: auto !important; }
+      @media (max-width: 768px) { .whatsapp-float { display: flex !important; } }
+      @media (min-width: 769px) { .whatsapp-float { display: flex !important; } }
+      @media (max-width: 768px) {
+        #mic-access-tool-general-button, .mic-access-tool-general-button,
+        #mic-init-access-tool .mic-access-tool-general-button, #mic-init-access-tool #mic-access-tool-general-button,
+        ._access-icon { display: flex !important; visibility: visible !important; opacity: 1 !important; pointer-events: auto !important; }
+        #mic-access-tool-box.opened-mic-access-tool, .mic-access-tool-box.opened-mic-access-tool,
+        #mic-init-access-tool #mic-access-tool-box.opened-mic-access-tool {
+          visibility: visible !important; opacity: 1 !important; pointer-events: auto !important;
+        }
+      }
+      @media (min-width: 769px) {
+        #mic-access-tool-general-button, .mic-access-tool-general-button,
+        #mic-init-access-tool .mic-access-tool-general-button, #mic-init-access-tool #mic-access-tool-general-button,
+        ._access-icon { display: flex !important; visibility: visible !important; opacity: 1 !important; pointer-events: auto !important; }
+        #mic-access-tool-box.opened-mic-access-tool, .mic-access-tool-box.opened-mic-access-tool,
+        #mic-init-access-tool #mic-access-tool-box.opened-mic-access-tool {
+          visibility: visible !important; opacity: 1 !important; pointer-events: auto !important;
+        }
+      }
+    </style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+  <nav class="navbar">
+  <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
+    <svg class="hamburger-icon" width="24" height="24" viewBox="0 0 24 24" fill="none">
+      <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+    <svg class="close-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" style="display: none;">
+      <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+  </button>
+  
+  <button class="phone-header-btn" data-phone="[business_phone]" aria-label="Call">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+    </svg>
+  </button>
+
+  <div class="nav-container">
+    <div class="nav-brand">
+      <a href="/" class="logo-link"><img class="logo" src="/assets/site-home-image-1.webp" alt="Keystone Legal"></a>
+    </div>
+    
+    <ul class="nav-menu" id="navMenu"><li><a href="#features">Why Us</a></li><li><a href="#services">Services</a></li><li><a href="#testimonials">Testimonials</a></li><li><a href="#stats">Track Record</a></li><li><a href="#about">About</a></li><li><a href="#team">Attorneys</a></li><li><a href="#faq">FAQ</a></li></ul>
+    
+    <div class="nav-cta-container">
+      <a href="#cta" class="nav-cta-btn">Contact</a>
+    </div>
+  </div>
+</nav>
+<script>
+
+// Navbar Mobile Menu Toggle and Contrast Fix
+(function() {
+  // Use 'load' event instead of 'DOMContentLoaded' to ensure we run AFTER all other scripts
+  window.addEventListener('load', function() {
+    
+    // FIX MOBILE BUTTON CONTRAST
+    // Detect navbar background color and apply contrasting color to mobile buttons
+    const navbar = document.querySelector('.navbar, nav, header');
+    if (!navbar) {
+      console.log('[Navbar] Navbar element not found');
+      return;
+    }
+    
+    // DECLARE VARIABLES EARLY to avoid Temporal Dead Zone errors
+    // These are used in multiple places below
+    let mobileToggle = document.getElementById('mobileToggle') ||
+                       document.querySelector('.mobile-toggle') ||
+                       document.querySelector('.hamburger') ||
+                       document.querySelector('.hamburger-menu') ||
+                       document.querySelector('.menu-toggle') ||
+                       document.querySelector('.burger-menu') ||
+                       document.querySelector('[aria-label="Menu"]') ||
+                       document.querySelector('[aria-label="תפריט"]');
+    
+    const phoneBtn = document.querySelector('.phone-header-btn');
+    
+    const computedStyle = window.getComputedStyle(navbar);
+    let bgColor = computedStyle.backgroundColor;
+    
+    console.log('[Navbar] Initial navbar background:', bgColor);
+    
+    // Check if background is transparent or rgba with 0 alpha
+    const isTransparent = bgColor === 'transparent' || 
+                         bgColor === 'rgba(0, 0, 0, 0)' ||
+                         (bgColor.startsWith('rgba') && bgColor.includes(', 0)'));
+    
+    if (isTransparent) {
+      // Check for background-image or gradient
+      const bgImage = computedStyle.backgroundImage;
+      if (bgImage && bgImage !== 'none') {
+        console.log('[Navbar] Navbar has background image/gradient, using dark text');
+        bgColor = 'rgb(240, 240, 240)'; // Assume light background
+      } else {
+        // Transparent navbar - check body background
+        const bodyBg = window.getComputedStyle(document.body).backgroundColor;
+        console.log('[Navbar] Navbar transparent, using body background:', bodyBg);
+        bgColor = bodyBg;
+      }
+    }
+    
+    // Calculate luminance to determine if background is light or dark
+    const rgb = bgColor.match(/\d+/g);
+    if (rgb && rgb.length >= 3) {
+      const r = parseInt(rgb[0]);
+      const g = parseInt(rgb[1]);
+      const b = parseInt(rgb[2]);
+      const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+      
+      // Mobile button colors are set by Claude's AI-generated CSS (same as .nav-menu a)
+      // No dynamic color overrides needed - colors come from the generated navbar CSS
+      console.log('[Navbar] Mobile button colors preserved from Claude CSS (luminance:', luminance.toFixed(2) + ')');
+      
+      // FIX ICON SIZES - Ensure SVGs are properly sized and visible
+      // INJECT CRITICAL CSS TO OVERRIDE ANY CONFLICTING RULES
+      const criticalCSS = document.createElement('style');
+      criticalCSS.id = 'zappy-mobile-nav-fix';
+      const htmlLang = document.documentElement.lang || 'en';
+      const htmlDir = document.documentElement.dir || 'ltr';
+      // Check both dir attribute AND lang for RTL detection
+      // dir="rtl" is the most reliable indicator
+      const isRTL = htmlDir === 'rtl' || htmlLang === 'he' || htmlLang === 'ar';
+      
+      criticalCSS.textContent = `
+        /* Hide mobile buttons on desktop, show only on mobile */
+        @media (min-width: 769px) {
+          .mobile-toggle,
+          .phone-header-btn {
+            display: none !important;
+          }
+        }
+        
+        /* Show and position mobile buttons correctly on mobile */
+        @media (max-width: 768px) {
+          .navbar,
+          nav.navbar {
+            min-height: 70px !important;
+          }
+
+          .mobile-toggle,
+          .phone-header-btn {
+            position: absolute !important;
+            top: 0 !important;
+            bottom: 0 !important;
+            margin-top: auto !important;
+            margin-bottom: auto !important;
+            transform: none !important;
+            z-index: 1001 !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            width: 36px !important;
+            height: 36px !important;
+            border-radius: 50% !important;
+            border: none !important;
+            cursor: pointer !important;
+            padding: 6px !important;
+            background: none !important;
+            color: var(--nav-text, var(--text-light)) !important;
+            touch-action: manipulation !important;
+            -webkit-tap-highlight-color: transparent !important;
+          }
+
+          html[data-zappy-site-type="ecommerce"] .phone-header-btn,
+          body[data-zappy-site-type="ecommerce"] .phone-header-btn,
+          html[data-zappy-site-type="ecommerce"] header .phone-header-btn,
+          html[data-zappy-site-type="ecommerce"] nav .phone-header-btn {
+            display: none !important;
+            visibility: hidden !important;
+            width: 0 !important;
+            height: 0 !important;
+            min-width: 0 !important;
+            overflow: hidden !important;
+          }
+          
+          /* LTR positioning (default): hamburger LEFT, phone RIGHT */
+          html:not([dir="rtl"]):not([lang="he"]):not([lang="ar"]) .mobile-toggle,
+          html[dir="ltr"] .mobile-toggle {
+            left: 12px !important;
+            right: auto !important;
+          }
+          html:not([dir="rtl"]):not([lang="he"]):not([lang="ar"]) .phone-header-btn,
+          html[dir="ltr"] .phone-header-btn {
+            right: 12px !important;
+            left: auto !important;
+          }
+          
+          /* RTL positioning: hamburger RIGHT, phone LEFT */
+          html[dir="rtl"] .mobile-toggle,
+          html[lang="he"] .mobile-toggle,
+          html[lang="ar"] .mobile-toggle {
+            right: 12px !important;
+            left: auto !important;
+          }
+          html[dir="rtl"] .phone-header-btn,
+          html[lang="he"] .phone-header-btn,
+          html[lang="ar"] .phone-header-btn {
+            left: 12px !important;
+            right: auto !important;
+          }
+          
+          /* CRITICAL: Ensure nav-container has min-height on mobile */
+          /* All children are positioned absolutely/fixed on mobile, so height:auto collapses to 0 */
+          .nav-container {
+            min-height: 70px !important;
+            position: relative !important;
+          }
+          
+          /* Ensure SVG icons are properly sized and inherit color */
+          .mobile-toggle svg,
+          .phone-header-btn svg {
+            width: 24px !important;
+            height: 24px !important;
+            /* Don't force display - let JavaScript control hamburger/close toggle */
+          }
+          
+          /* Reset nav-cta-container on mobile - remove desktop box-shadow/padding */
+          /* that creates a visible ghost box when CTA button is hidden */
+          .nav-cta-container {
+            box-shadow: none !important;
+            padding: 0 !important;
+          }
+          
+          /* Hide nav-cta-container entirely on mobile when there's no lang-switcher */
+          /* (only the CTA button is inside, and it's hidden on mobile) */
+          .nav-cta-container:not(:has(.lang-switcher)) {
+            display: none !important;
+          }
+          
+          /* CRITICAL: Prevent hero image fade gradient from bleeding over headline text */
+          /* The .image-fade-gradient has bottom: -30px (extends below parent) */
+          /* On mobile stacked layout, this overlaps the h1 text below the image */
+          .hero-image-column {
+            overflow: hidden !important;
+          }
+          .image-fade-gradient {
+            bottom: 0 !important;
+          }
+          
+          /* Hide desktop language switcher on mobile - hamburger menu handles it */
+          /* High specificity to override stored CSS */
+          .lang-switcher,
+          .nav-cta-container .lang-switcher,
+          .nav-container .lang-switcher,
+          .navbar .lang-switcher,
+          .navbar .nav-cta-container .lang-switcher {
+            display: none !important;
+          }
+        }
+      `;
+      
+      // Remove existing fix if present and inject new one
+      const existing = document.getElementById('zappy-mobile-nav-fix');
+      if (existing) existing.remove();
+      document.head.appendChild(criticalCSS);
+      
+      console.log('[Navbar] Critical CSS injected for mobile nav positioning');
+      
+      // ONLY apply inline positioning styles on mobile viewport
+      // On desktop, the CSS handles hiding these buttons with display: none
+      // Inline styles were breaking desktop layout by overriding CSS
+      const isMobileViewport = window.innerWidth <= 768;
+      
+      if (mobileToggle) {
+        // Icon sizing applies to all viewports for consistency
+        const hamburgerIcon = mobileToggle.querySelector('.hamburger-icon');
+        const closeIcon = mobileToggle.querySelector('.close-icon');
+        
+        if (hamburgerIcon) {
+          hamburgerIcon.style.setProperty('width', '24px', 'important');
+          hamburgerIcon.style.setProperty('height', '24px', 'important');
+          hamburgerIcon.style.setProperty('display', 'block', 'important'); // Show hamburger by default
+        }
+        if (closeIcon) {
+          closeIcon.style.setProperty('width', '24px', 'important');
+          closeIcon.style.setProperty('height', '24px', 'important');
+          closeIcon.style.setProperty('display', 'none', 'important'); // Hide close icon by default
+        }
+        
+        // ONLY set positioning inline styles on mobile
+        if (isMobileViewport) {
+          mobileToggle.style.setProperty('position', 'absolute', 'important');
+          mobileToggle.style.setProperty('top', '0', 'important');
+          mobileToggle.style.setProperty('bottom', '0', 'important');
+          mobileToggle.style.setProperty('margin-top', 'auto', 'important');
+          mobileToggle.style.setProperty('margin-bottom', 'auto', 'important');
+          mobileToggle.style.setProperty('transform', 'none', 'important');
+          mobileToggle.style.setProperty('z-index', '1001', 'important');
+          
+          // Clear any inline left/right so CSS can take over based on html[dir]
+          mobileToggle.style.removeProperty('left');
+          mobileToggle.style.removeProperty('right');
+          
+          console.log('[Navbar] Mobile toggle positioning applied (mobile viewport)');
+        } else {
+          // On desktop, clear any positioning styles to let CSS handle it
+          mobileToggle.style.removeProperty('position');
+          mobileToggle.style.removeProperty('top');
+          mobileToggle.style.removeProperty('transform');
+          mobileToggle.style.removeProperty('z-index');
+          mobileToggle.style.removeProperty('left');
+          mobileToggle.style.removeProperty('right');
+          console.log('[Navbar] Desktop viewport - cleared mobile toggle inline positioning');
+        }
+      }
+      
+      if (phoneBtn) {
+        // Icon sizing applies to all viewports
+        const phoneIcon = phoneBtn.querySelector('svg');
+        if (phoneIcon) {
+          phoneIcon.style.width = '24px';
+          phoneIcon.style.height = '24px';
+          phoneIcon.setAttribute('width', '24');
+          phoneIcon.setAttribute('height', '24');
+        }
+        
+        // ONLY set positioning inline styles on mobile
+        if (isMobileViewport) {
+          phoneBtn.style.setProperty('position', 'absolute', 'important');
+          phoneBtn.style.setProperty('top', '0', 'important');
+          phoneBtn.style.setProperty('bottom', '0', 'important');
+          phoneBtn.style.setProperty('margin-top', 'auto', 'important');
+          phoneBtn.style.setProperty('margin-bottom', 'auto', 'important');
+          phoneBtn.style.setProperty('transform', 'none', 'important');
+          phoneBtn.style.setProperty('z-index', '1001', 'important');
+          
+          // Clear any inline left/right so CSS can take over based on html[dir]
+          phoneBtn.style.removeProperty('left');
+          phoneBtn.style.removeProperty('right');
+          
+          console.log('[Navbar] Phone button positioning applied (mobile viewport)');
+        } else {
+          // On desktop, clear any positioning styles to let CSS handle it
+          phoneBtn.style.removeProperty('position');
+          phoneBtn.style.removeProperty('top');
+          phoneBtn.style.removeProperty('transform');
+          phoneBtn.style.removeProperty('z-index');
+          phoneBtn.style.removeProperty('left');
+          phoneBtn.style.removeProperty('right');
+          console.log('[Navbar] Desktop viewport - cleared phone button inline positioning');
+        }
+      }
+    } else {
+      console.log('[Navbar] Could not parse background color:', bgColor);
+    }
+    
+    // MOBILE MENU TOGGLE
+    // Re-query in case DOM changed (mobileToggle already declared at top of function)
+    mobileToggle = document.getElementById('mobileToggle') ||
+                   document.querySelector('.mobile-toggle') ||
+                   document.querySelector('.hamburger') ||
+                   document.querySelector('.hamburger-menu') ||
+                   document.querySelector('.menu-toggle') ||
+                   document.querySelector('.burger-menu') ||
+                   document.querySelector('[aria-label="Menu"]') ||
+                   document.querySelector('[aria-label="תפריט"]');
+    
+    // EXPANDED SEARCH: Find nav menu by ID or class
+    const navMenu = document.getElementById('navMenu') ||
+                  document.querySelector('.nav-menu') ||
+                  document.querySelector('.nav-links') ||
+                  document.querySelector('nav ul:not(.submenu)');
+    
+    if (!mobileToggle || !navMenu) {
+      console.log('[Navbar] Mobile toggle or menu not found:', { toggle: !!mobileToggle, menu: !!navMenu });
+      return;
+    }
+    
+    // Ensure navMenu has ID for CSS targeting
+    if (!navMenu.id) {
+      navMenu.id = 'navMenu';
+    }
+    
+    console.log('[Navbar] Initializing mobile menu...');
+    
+    // Remove any existing event listeners by cloning the button
+    const newToggle = mobileToggle.cloneNode(true);
+    mobileToggle.parentNode.replaceChild(newToggle, mobileToggle);
+    
+    // Toggle menu handler (shared by click and touchend)
+    function handleToggle(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      
+      const hamburgerIcon = newToggle.querySelector('.hamburger-icon');
+      const closeIcon = newToggle.querySelector('.close-icon');
+      const isActive = navMenu.classList.contains('active');
+      
+      if (isActive) {
+        // Close menu
+        navMenu.classList.remove('active');
+        if (hamburgerIcon) hamburgerIcon.style.setProperty('display', 'block', 'important');
+        if (closeIcon) closeIcon.style.setProperty('display', 'none', 'important');
+        document.body.style.overflow = '';
+        console.log('[Navbar] Menu closed');
+      } else {
+        // Open menu
+        navMenu.classList.add('active');
+        if (hamburgerIcon) hamburgerIcon.style.setProperty('display', 'none', 'important');
+        if (closeIcon) closeIcon.style.setProperty('display', 'block', 'important');
+        document.body.style.overflow = 'hidden';
+        console.log('[Navbar] Menu opened');
+      }
+    }
+    
+    // Use click for desktop/emulation and touchend as iOS Safari fallback.
+    // Prevent double-fire with a timestamp guard.
+    var lastToggleTime = 0;
+    function guardedToggle(e) {
+      var now = Date.now();
+      if (now - lastToggleTime < 300) return;
+      lastToggleTime = now;
+      handleToggle(e);
+    }
+    
+    newToggle.addEventListener('click', guardedToggle);
+    newToggle.addEventListener('touchend', guardedToggle);
+    
+    // Close menu when clicking nav links (but NOT dropdown toggles)
+    const navLinks = navMenu.querySelectorAll('a');
+    navLinks.forEach(function(link) {
+      link.addEventListener('click', function() {
+        // Don't close if it's a dropdown child (unless it's a real navigation link)
+        if (this.getAttribute('href') === '#') return;
+        
+        const hamburgerIcon = newToggle.querySelector('.hamburger-icon');
+        const closeIcon = newToggle.querySelector('.close-icon');
+        
+        navMenu.classList.remove('active');
+        if (hamburgerIcon) hamburgerIcon.style.setProperty('display', 'block', 'important');
+        if (closeIcon) closeIcon.style.setProperty('display', 'none', 'important');
+        document.body.style.overflow = '';
+        console.log('[Navbar] Menu closed (link clicked)');
+      });
+    });
+    
+    // DROPDOWN MENU TOGGLE (for mobile and touch devices)
+    var dropdownToggles = navMenu.querySelectorAll('.dropdown-toggle');
+    dropdownToggles.forEach(function(toggle) {
+      toggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var parent = this.closest('.nav-dropdown');
+        if (!parent) return;
+        
+        // Close other open dropdowns at the same level
+        var siblings = parent.parentNode.querySelectorAll('.nav-dropdown.open');
+        siblings.forEach(function(sib) {
+          if (sib !== parent) sib.classList.remove('open');
+        });
+        
+        parent.classList.toggle('open');
+        console.log('[Navbar] Dropdown toggled:', parent.classList.contains('open') ? 'open' : 'closed');
+      });
+    });
+    
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.nav-dropdown')) {
+        var openDropdowns = document.querySelectorAll('.nav-dropdown.open');
+        openDropdowns.forEach(function(dd) { dd.classList.remove('open'); });
+      }
+    });
+    
+    console.log('[Navbar] Dropdown handlers initialized for ' + dropdownToggles.length + ' dropdowns');
+    
+    // Phone button functionality (phoneBtn already declared at top of function)
+    if (phoneBtn) {
+      phoneBtn.addEventListener('click', function() {
+        // Get phone number from placeholder in page or use default
+        const phoneLinks = document.querySelectorAll('a[href^="tel:"]');
+        const phoneNumber = phoneLinks.length > 0 
+          ? phoneLinks[0].getAttribute('href').replace('tel:', '')
+          : '[business_phone]';
+        
+        window.location.href = 'tel:' + phoneNumber;
+        console.log('[Navbar] Phone button clicked');
+      });
+    }
+    
+    console.log('[Navbar] Mobile menu initialized successfully');
+    
+    // WhatsApp button visibility is now controlled via CSS (siteSettings).
+    // No JS-based desktop hiding — the button is visible on both mobile and desktop by default.
+  });
+})();
+
+</script>
+  
+  <main id="main">
+    <section data-band-index="0" id="hero" class="home-hero-section" data-layout-spec="Home-hero" data-hero-type="product_focus">
+  <div class="home-hero-section__inner">
+    <!-- START Half: Dark Forest-Green Panel with Content -->
+    <div class="home-hero-section__content-panel">
+      <div class="home-hero-section__content-wrapper">
+        <span class="home-hero-section__eyebrow">REAL ESTATE LAW. REAL RESULTS.</span>
+        <h1 class="home-hero-section__headline">The Legal Keystone of Your Real Estate Success</h1>
+        <h3 class="home-hero-section__subtitle">Strategic legal counsel and representation for real estate transactions, disputes, and investments. Protect your property. Secure your future.</h3>
+        <div class="home-hero-section__cta-group">
+          <a href="/contact" class="home-hero-section__cta home-hero-section__cta--primary">
+            SCHEDULE CONSULTATION
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" class="home-hero-section__cta-icon" aria-hidden="true"><path d="M4 10h12M12 6l4 4-4 4"></path></svg>
+          </a>
+          <a href="/services" class="home-hero-section__cta home-hero-section__cta--secondary">
+            OUR SERVICES
+          </a>
+        </div>
+      </div>
+    </div>
+    <!-- END Half: Aerial Property Photograph -->
+    <div class="home-hero-section__image-panel">
+      <img loading="eager" fetchpriority="high" data-hero-bg="true" data-placeholder="home-hero-hero-image-1" data-context="Aerial top-down photograph of a luxury waterfront residential neighborhood with large homes, curved roads, lush trees, and a body of water visible at the edge, shot from directly above at high altitude. Composition: top-down aerial, wide angle, full neighborhood visible. Framing: occupies the END half of the hero, runs from top to bottom of the band, slightly off-center to the right. Background: deep dark green overlay gradient fading from the START side. Treatment: full-bleed background with dark green gradient scrim on the START side fading to the photo" data-treatment="full-bleed background with dark green gradient scrim on the START side fading to the photo" data-dominant-color="#3a5c3e" data-aspect-ratio="3:2" class="cutout" alt="Aerial top-down view of a luxury waterfront neighborhood" width="1200" height="800" src="/assets/site-home-hero-hero-image-1.webp">
+      <div class="home-hero-section__image-gradient" aria-hidden="true"></div>
+    </div>
+  </div>
+  <!-- Bottom Strip: Three Audience Icons -->
+  <div class="home-hero-section__bottom-strip">
+    <div class="home-hero-section__strip-container">
+      <div class="home-hero-section__audience-item">
+        <div class="home-hero-section__audience-icon">
+          <svg data-element-type="icon" data-icon-type="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M20 4L4 16v20h12v-8h8v8h12V16L20 4z"></path></svg>
+        </div>
+        <span class="home-hero-section__audience-label">First-Time Homebuyers</span>
+      </div>
+      <div class="home-hero-section__audience-item">
+        <div class="home-hero-section__audience-icon">
+          <svg data-element-type="icon" data-icon-type="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M8 36V16l12-12 12 12v20"></path><rect x="14" y="24" width="12" height="12"></rect></svg>
+        </div>
+        <span class="home-hero-section__audience-label">Real Estate Investors</span>
+      </div>
+      <div class="home-hero-section__audience-item">
+        <div class="home-hero-section__audience-icon">
+          <svg data-element-type="icon" data-icon-type="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="18" cy="18" r="10"></circle><path d="M26 26l8 8"></path></svg>
+        </div>
+        <span class="home-hero-section__audience-label">Real Estate Agents</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section data-band-index="1" id="features" class="home-features-section" data-layout-spec="Home-features">
+  <div class="home-features-section__container">
+    <!-- START Panel: Text Content -->
+    <div class="home-features-section__start-panel">
+      <span class="home-features-section__eyebrow">Our Practice</span>
+      <h2 class="home-features-section__headline">Real Estate Law Built on Trust</h2>
+      <p class="home-features-section__body">Keystone Legal delivers sophisticated legal solutions with a practical approach—helping clients navigate complex real estate matters with clarity and confidence.</p>
+      <a href="#" class="home-features-section__link">ABOUT OUR FIRM <span class="home-features-section__link-arrow">→</span></a>
+    </div>
+
+    <!-- END Panel: Feature Cards Grid -->
+    <div class="home-features-section__end-panel">
+      <div class="home-features-section__features-grid">
+        
+        <!-- Feature 1: Client Focused -->
+        <div class="home-features-section__feature-card">
+          <div class="home-features-section__feature-icon">
+            <svg data-element-type="icon" data-icon-type="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 6v28M8 34h24"></path>
+              <path d="M20 6l-10 8 10 8"></path>
+              <path d="M20 6l10 8-10 8"></path>
+              <circle cx="10" cy="14" r="4"></circle>
+              <circle cx="30" cy="14" r="4"></circle>
+              <path d="M20 28v-4"></path>
+              <circle cx="20" cy="22" r="1.5" fill="currentColor"></circle>
+            </svg>
+          </div>
+          <h3 class="home-features-section__feature-label">Client Focused</h3>
+          <p class="home-features-section__feature-desc">We prioritize your goals, delivering personalized real estate legal services tailored to your unique situation.</p>
+        </div>
+
+        <!-- Feature 2: Deep Real Estate Experience -->
+        <div class="home-features-section__feature-card">
+          <div class="home-features-section__feature-icon">
+            <svg data-element-type="icon" data-icon-type="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="4" y="8" width="32" height="24" rx="1"></rect>
+              <path d="M4 16h32"></path>
+              <path d="M14 8v24"></path>
+              <line x1="8" y1="20" x2="10" y2="20"></line>
+              <line x1="20" y1="20" x2="24" y2="20"></line>
+              <line x1="28" y1="20" x2="32" y2="20"></line>
+            </svg>
+          </div>
+          <h3 class="home-features-section__feature-label">Deep Real Estate Experience</h3>
+          <p class="home-features-section__feature-desc">Decades of focused practice in real estate law, from transactions to complex litigation.</p>
+        </div>
+
+        <!-- Feature 3: Strategic Solutions -->
+        <div class="home-features-section__feature-card">
+          <div class="home-features-section__feature-icon">
+            <svg data-element-type="icon" data-icon-type="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="20" cy="20" r="16"></circle>
+              <path d="M20 12v8l6 4"></path>
+              <circle cx="20" cy="20" r="2" fill="currentColor"></circle>
+            </svg>
+          </div>
+          <h3 class="home-features-section__feature-label">Strategic Solutions</h3>
+          <p class="home-features-section__feature-desc">Proactive legal strategies that anticipate challenges and protect your real estate investments.</p>
+        </div>
+
+        <!-- Feature 4: Integrity & Discretion -->
+        <div class="home-features-section__feature-card">
+          <div class="home-features-section__feature-icon">
+            <svg data-element-type="icon" data-icon-type="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 4L6 10v12c0 8 14 16 14 16s14-8 14-16V10L20 4z"></path>
+              <path d="M14 20l4 4 8-8"></path>
+            </svg>
+          </div>
+          <h3 class="home-features-section__feature-label">Integrity &amp; Discretion</h3>
+          <p class="home-features-section__feature-desc">Uncompromising ethical standards and confidentiality in every attorney-client relationship.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<section data-band-index="2" id="services" class="home-services-section" data-layout-spec="Home-services">
+  <!-- Background building image -->
+  <div class="home-services-section__bg-image">
+    <img loading="lazy" decoding="async" data-placeholder="home-services-background-1" data-context="Modern commercial glass-facade office building photographed from a low angle looking upward, showing reflective glass panels and steel frame structure against a clear sky. Composition: low-angle upward shot, architectural, partial building visible on the END side. Framing: occupies the END portion of the section, partially cropped, blends into the dark background. Background: deep dark green section background. Treatment: full-bleed background with dark overlay, building photo visible on the right/end side" data-treatment="full-bleed background with dark overlay, building photo visible on the right/end side" data-dominant-color="#2a4a35" data-aspect-ratio="3:2" alt="Modern commercial glass-facade office building low angle" width="1200" height="800" src="/assets/site-home-services-background-1.webp">
+  </div>
+
+  <!-- Content container -->
+  <div class="home-services-section__container">
+    <!-- Eyebrow -->
+    <p class="home-services-section__eyebrow">Our Expertise</p>
+    
+    <!-- Headline -->
+    <h2 class="home-services-section__headline">Comprehensive Real Estate Legal Services</h2>
+    
+    <!-- Services grid: EXACTLY 5 columns -->
+    <div class="home-services-section__grid">
+      
+      <!-- Card 1: Real Estate Transactions -->
+      <article class="home-services-section__card">
+        <div class="home-services-section__card-icon">
+          <svg data-element-type="icon" data-icon-type="svg" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 20 L20 8 L32 20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M12 16 L12 30 L28 30 L28 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M18 30 L18 24 L22 24 L22 30" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </div>
+        <h3 class="home-services-section__card-title">REAL ESTATE TRANSACTIONS</h3>
+        <p class="home-services-section__card-desc">Navigating residential and commercial purchases with precise contract review, negotiation, and closing representation to protect your investment at every stage.</p>
+      </article>
+
+      <!-- Card 2: Title & Due Diligence -->
+      <article class="home-services-section__card">
+        <div class="home-services-section__card-icon">
+          <svg data-element-type="icon" data-icon-type="svg" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="20" cy="20" r="12" stroke="currentColor" stroke-width="1.5"></circle>
+            <path d="M20 14 L20 22 L26 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M12 20 L12 20" stroke="currentColor" stroke-width="3" stroke-linecap="round"></path>
+          </svg>
+        </div>
+        <h3 class="home-services-section__card-title">TITLE &amp; DUE DILIGENCE</h3>
+        <p class="home-services-section__card-desc">Thorough title examinations, lien searches, and zoning analysis to uncover risks before they become liabilities, ensuring clean property transfers.</p>
+      </article>
+
+      <!-- Card 3: Real Estate Disputes -->
+      <article class="home-services-section__card">
+        <div class="home-services-section__card-icon">
+          <svg data-element-type="icon" data-icon-type="svg" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 8 L32 8 L32 28 L8 28 Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M14 14 L26 22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+            <path d="M26 14 L14 22" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+          </svg>
+        </div>
+        <h3 class="home-services-section__card-title">REAL ESTATE DISPUTES</h3>
+        <p class="home-services-section__card-desc">Assertive litigation and mediation for boundary conflicts, breach of contract, and title defects, delivered with the strategic rigor your case demands.</p>
+      </article>
+
+      <!-- Card 4: Commercial Real Estate -->
+      <article class="home-services-section__card">
+        <div class="home-services-section__card-icon">
+          <svg data-element-type="icon" data-icon-type="svg" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="6" y="16" width="28" height="18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></rect>
+            <path d="M6 16 L20 8 L34 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            <rect x="14" y="22" width="4" height="4" stroke="currentColor" stroke-width="1.5"></rect>
+            <rect x="22" y="22" width="4" height="4" stroke="currentColor" stroke-width="1.5"></rect>
+            <rect x="14" y="28" width="4" height="4" stroke="currentColor" stroke-width="1.5"></rect>
+            <rect x="22" y="28" width="4" height="4" stroke="currentColor" stroke-width="1.5"></rect>
+          </svg>
+        </div>
+        <h3 class="home-services-section__card-title">COMMERCIAL REAL ESTATE</h3>
+        <p class="home-services-section__card-desc">Leasing, acquisition, and development counsel for office, retail, and industrial assets, balancing risk mitigation with your commercial objectives.</p>
+      </article>
+
+      <!-- Card 5: Land Use & Entitlements -->
+      <article class="home-services-section__card">
+        <div class="home-services-section__card-icon">
+          <svg data-element-type="icon" data-icon-type="svg" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8 30 L12 24 L18 26 L26 18 L32 22 L32 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M32 10 L26 10 L26 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M8 30 L8 10 L32 10" stroke="currentColor" stroke-width="1" stroke-dasharray="2 2"></path>
+          </svg>
+        </div>
+        <h3 class="home-services-section__card-title">LAND USE &amp; ENTITLEMENTS</h3>
+        <p class="home-services-section__card-desc">Navigating zoning approvals, variances, and subdivision maps with local agencies to unlock the full potential of your property.</p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section data-band-index="3" id="testimonials" class="home-testimonials-section" data-layout-spec="Home-testimonials">
+  <div class="testimonials-container">
+    <div class="testimonials-header">
+      <h2>What Our Clients Say</h2>
+      <p class="testimonials-subtitle">Trusted by homebuyers, investors, and agents across the real estate spectrum.</p>
+    </div>
+    <div class="testimonials-grid">
+      
+      <article class="testimonial-card">
+        <div class="card-stars">
+          <svg data-element-type="icon" data-icon-type="svg" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+          <svg data-element-type="icon" data-icon-type="svg" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+          <svg data-element-type="icon" data-icon-type="svg" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+          <svg data-element-type="icon" data-icon-type="svg" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+          <svg data-element-type="icon" data-icon-type="svg" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+        </div>
+        <blockquote class="testimonial-quote">
+          <p>"Keystone Legal made our first home purchase seamless. Their attention to detail during closing gave us complete peace of mind. We couldn't have asked for better representation."</p>
+        </blockquote>
+        <div class="testimonial-author">
+          <div class="author-avatar" aria-hidden="true">
+            <svg data-element-type="icon" data-icon-type="svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v1.2c0 .66.54 1.2 1.2 1.2h16.8c.66 0 1.2-.54 1.2-1.2v-1.2c0-3.2-6.4-4.8-9.6-4.8z"></path></svg>
+          </div>
+          <div class="author-info">
+            <span class="author-name">Sarah &amp; James Mitchell</span>
+            <span class="author-role">First-Time Homebuyers</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="testimonial-card">
+        <div class="card-stars">
+          <svg data-element-type="icon" data-icon-type="svg" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+          <svg data-element-type="icon" data-icon-type="svg" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+          <svg data-element-type="icon" data-icon-type="svg" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+          <svg data-element-type="icon" data-icon-type="svg" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+          <svg data-element-type="icon" data-icon-type="svg" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+        </div>
+        <blockquote class="testimonial-quote">
+          <p>"As a real estate investor, I need a legal team that understands complex transactions. Keystone Legal has been instrumental in structuring our portfolio acquisitions with precision and integrity."</p>
+        </blockquote>
+        <div class="testimonial-author">
+          <div class="author-avatar" aria-hidden="true">
+            <svg data-element-type="icon" data-icon-type="svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v1.2c0 .66.54 1.2 1.2 1.2h16.8c.66 0 1.2-.54 1.2-1.2v-1.2c0-3.2-6.4-4.8-9.6-4.8z"></path></svg>
+          </div>
+          <div class="author-info">
+            <span class="author-name">David Chen</span>
+            <span class="author-role">Real Estate Investor</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="testimonial-card">
+        <div class="card-stars">
+          <svg data-element-type="icon" data-icon-type="svg" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+          <svg data-element-type="icon" data-icon-type="svg" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+          <svg data-element-type="icon" data-icon-type="svg" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+          <svg data-element-type="icon" data-icon-type="svg" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+          <svg data-element-type="icon" data-icon-type="svg" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg>
+        </div>
+        <blockquote class="testimonial-quote">
+          <p>"I've referred dozens of clients to Keystone Legal for their real estate needs. Their expertise in property disputes and title issues is unmatched. A true partner for any real estate professional."</p>
+        </blockquote>
+        <div class="testimonial-author">
+          <div class="author-avatar" aria-hidden="true">
+            <svg data-element-type="icon" data-icon-type="svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v1.2c0 .66.54 1.2 1.2 1.2h16.8c.66 0 1.2-.54 1.2-1.2v-1.2c0-3.2-6.4-4.8-9.6-4.8z"></path></svg>
+          </div>
+          <div class="author-info">
+            <span class="author-name">Maria Gonzalez</span>
+            <span class="author-role">Licensed Real Estate Agent</span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section data-band-index="4" id="stats" class="home-stats-section" data-layout-spec="Home-stats">
+  <div class="home-stats-section__container">
+    <div class="home-stats-section__grid">
+      <!-- Stat 1 -->
+      <div class="home-stats-section__card">
+        <span class="home-stats-section__number">500+</span>
+        <h3 class="home-stats-section__label">Transactions Closed</h3>
+        <p class="home-stats-section__desc">Successfully navigated complex real estate deals with precision and authority.</p>
+      </div>
+      <!-- Stat 2 -->
+      <div class="home-stats-section__card">
+        <span class="home-stats-section__number">20+</span>
+        <h3 class="home-stats-section__label">Years Experience</h3>
+        <p class="home-stats-section__desc">Decades of deep expertise in real estate law, protecting your most valuable assets.</p>
+      </div>
+      <!-- Stat 3 -->
+      <div class="home-stats-section__card">
+        <span class="home-stats-section__number">98%</span>
+        <h3 class="home-stats-section__label">Client Satisfaction</h3>
+        <p class="home-stats-section__desc">A proven track record of trust, earning the loyalty of clients across the region.</p>
+      </div>
+      <!-- Stat 4 -->
+      <div class="home-stats-section__card">
+        <span class="home-stats-section__number">$1B+</span>
+        <h3 class="home-stats-section__label">Real Estate Represented</h3>
+        <p class="home-stats-section__desc">Substantial portfolio value handled, reflecting our market leadership and capability.</p>
+      </div>
+    </div>
+  </div>
+  <!-- Decorative accent line -->
+  <div class="home-stats-section__accent-line" aria-hidden="true"></div>
+</section>
+
+<section data-band-index="5" id="about" class="home-about-section" data-layout-spec="Home-about">
+    <div class="home-about-section__container">
+        <!-- LEFT PANEL: Content -->
+        <div class="home-about-section__content">
+            <span class="home-about-section__eyebrow">Our Firm</span>
+            <h2 class="home-about-section__headline">A Legacy of Trust in Real Estate Law</h2>
+            
+            <div class="home-about-section__text">
+                <p>At Keystone Legal, we believe that every property tells a story, and every transaction deserves a foundation of unwavering legal integrity. Founded on the principles of precision and client-first representation, our firm has grown into a trusted pillar for individuals, families, and investors navigating the complex landscape of real estate.</p>
+                <p>Our philosophy is simple: we don't just process paperwork; we protect legacies. Specializing exclusively in residential, commercial, and investment real estate law, we combine deep industry insight with a personalized approach. Whether you are closing on your first home or structuring a multi-million dollar commercial portfolio, our team provides the strategic counsel you need to move forward with absolute confidence.</p>
+            </div>
+
+            <a href="/attorneys" class="home-about-section__cta">
+                Meet Our Attorneys
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-element-type="icon" data-icon-type="svg" aria-hidden="true">
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                    <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
+            </a>
+        </div>
+
+        <!-- RIGHT PANEL: Image -->
+        <div class="home-about-section__image-wrapper">
+            <img loading="lazy" decoding="async" data-placeholder="home-about-inline-tile-1" data-context="Professional headshot or team photo of attorneys in a modern law office setting, dressed in formal business attire, conveying authority and approachability. Composition: eye-level, half-body or group shot. Framing: occupies the END half of the split layout. Background: neutral office interior. Treatment: none" data-treatment="none" data-dominant-color="#3a3a3a" data-aspect-ratio="4:5" alt="Keystone Legal attorneys in a modern office setting" width="600" height="750" src="/assets/site-home-about-inline-tile-1.webp" class="home-about-section__image">
+            <!-- Decorative accent behind image -->
+            <div class="home-about-section__image-accent" aria-hidden="true"></div>
+        </div>
+    </div>
+</section>
+
+<section data-band-index="6" id="team" class="home-team-section" data-layout-spec="Home-team">
+    <div class="home-team-section__container">
+        <div class="home-team-section__header">
+            <h2 class="home-team-section__title">Our Attorneys</h2>
+            <p class="home-team-section__subtitle">Guiding your real estate matters with precision and authority.</p>
+        </div>
+        <div class="home-team-section__grid">
+            <article class="home-team-section__card">
+                <div class="home-team-section__image-wrapper">
+                    <img loading="lazy" decoding="async" data-placeholder="home-team-team-portrait-1" data-context="Professional headshot of a real estate attorney in formal business attire against a neutral background. Composition: half-body, eye-level, isolated portrait. Framing: centered within card, tight crop. Background: neutral light grey or parchment. Treatment: none" data-treatment="none" data-dominant-color="#c8b89a" data-aspect-ratio="4:5" class="cutout" alt="Portrait of Managing Partner" width="300" height="375" src="/assets/site-home-team-team-portrait-1.webp">
+                </div>
+                <div class="home-team-section__card-content">
+                    <h3 class="home-team-section__name">Eleanor Vance</h3>
+                    <p class="home-team-section__title">Managing Partner</p>
+                    <p class="home-team-section__focus">Practice Focus: Commercial Real Estate Acquisitions &amp; Dispositions</p>
+                    <p class="home-team-section__bio">With over 25 years of experience, Eleanor leads the firm's complex transactional practice, representing developers and institutional investors in high-stakes property matters.</p>
+                    <p class="home-team-section__admissions">Bar Admissions: Oklahoma, Texas</p>
+                </div>
+            </article>
+            <article class="home-team-section__card">
+                <div class="home-team-section__image-wrapper">
+                    <img loading="lazy" decoding="async" data-placeholder="home-team-team-portrait-2" data-context="Professional headshot of a senior real estate attorney in formal business attire against a neutral background. Composition: half-body, eye-level, isolated portrait. Framing: centered within card, tight crop. Background: neutral light grey or parchment. Treatment: none" data-treatment="none" data-dominant-color="#c8b89a" data-aspect-ratio="4:5" class="cutout" alt="Portrait of Senior Associate" width="300" height="375" src="/assets/site-home-team-team-portrait-2.webp">
+                </div>
+                <div class="home-team-section__card-content">
+                    <h3 class="home-team-section__name">Marcus Thorne</h3>
+                    <p class="home-team-section__title">Senior Associate</p>
+                    <p class="home-team-section__focus">Practice Focus: Real Estate Litigation &amp; Dispute Resolution</p>
+                    <p class="home-team-section__bio">Marcus is a tenacious litigator known for securing favorable outcomes in complex boundary disputes, title claims, and landlord-tenant conflicts.</p>
+                    <p class="home-team-section__admissions">Bar Admissions: Oklahoma</p>
+                </div>
+            </article>
+            <article class="home-team-section__card">
+                <div class="home-team-section__image-wrapper">
+                    <img loading="lazy" decoding="async" data-placeholder="home-team-team-portrait-3" data-context="Professional headshot of a real estate attorney in formal business attire against a neutral background. Composition: half-body, eye-level, isolated portrait. Framing: centered within card, tight crop. Background: neutral light grey or parchment. Treatment: none" data-treatment="none" data-dominant-color="#c8b89a" data-aspect-ratio="4:5" class="cutout" alt="Portrait of Associate Attorney" width="300" height="375" src="/assets/site-home-team-team-portrait-3.webp">
+                </div>
+                <div class="home-team-section__card-content">
+                    <h3 class="home-team-section__name">Clara Benning</h3>
+                    <p class="home-team-section__title">Associate Attorney</p>
+                    <p class="home-team-section__focus">Practice Focus: Residential Transactions &amp; Affordable Legal Services</p>
+                    <p class="home-team-section__bio">Clara specializes in guiding families and first-time buyers through the closing process, ensuring clarity and confidence in every transaction.</p>
+                    <p class="home-team-section__admissions">Bar Admissions: Oklahoma, Arkansas</p>
+                </div>
+            </article>
+        </div>
+    </div>
+</section>
+
+<section data-band-index="7" id="faq" class="home-faq-section" data-layout-spec="Home-faq">
+  <div class="home-faq-section__container">
+    <div class="home-faq-section__header">
+      <h2 class="home-faq-section__title">Frequently Asked Questions</h2>
+      <p class="home-faq-section__subtitle">Clear answers to common questions about our real estate legal services.</p>
+    </div>
+    <div class="home-faq-section__list">
+      <details class="home-faq-section__item" open="">
+        <summary class="home-faq-section__question">
+          <span class="home-faq-section__question-text">Do I need an attorney to buy a home?</span>
+          <span class="home-faq-section__icon"></span>
+        </summary>
+        <div class="home-faq-section__answer">
+          <p>While not legally required in all jurisdictions, having an experienced real estate attorney protects your interests throughout the transaction. We review contracts, identify potential issues, and ensure the title is clear before you close.</p>
+        </div>
+      </details>
+      <details class="home-faq-section__item">
+        <summary class="home-faq-section__question">
+          <span class="home-faq-section__question-text">What does title review involve?</span>
+          <span class="home-faq-section__icon"></span>
+        </summary>
+        <div class="home-faq-section__answer">
+          <p>Our title review examines the property's ownership history to uncover any liens, easements, or encumbrances. We verify the seller has the legal right to transfer the property and work to resolve any defects before closing.</p>
+        </div>
+      </details>
+      <details class="home-faq-section__item">
+        <summary class="home-faq-section__question">
+          <span class="home-faq-section__question-text">How do you handle real estate disputes?</span>
+          <span class="home-faq-section__icon"></span>
+        </summary>
+        <div class="home-faq-section__answer">
+          <p>We pursue resolution through negotiation and mediation whenever possible, but we are fully prepared to litigate boundary disputes, contract breaches, and title claims. Our goal is to protect your property rights efficiently and effectively.</p>
+        </div>
+      </details>
+      <details class="home-faq-section__item">
+        <summary class="home-faq-section__question">
+          <span class="home-faq-section__question-text">What is due diligence?</span>
+          <span class="home-faq-section__icon"></span>
+        </summary>
+        <div class="home-faq-section__answer">
+          <p>Due diligence is the investigation period where we verify every aspect of the property — zoning, environmental conditions, survey boundaries, and existing leases. It's your opportunity to uncover any issues before committing to the purchase.</p>
+        </div>
+      </details>
+      <details class="home-faq-section__item">
+        <summary class="home-faq-section__question">
+          <span class="home-faq-section__question-text">How much do your services cost?</span>
+          <span class="home-faq-section__icon"></span>
+        </summary>
+        <div class="home-faq-section__answer">
+          <p>We offer transparent, competitive pricing tailored to the scope of your matter. Whether you need a simple contract review or full litigation support, we provide a clear fee structure upfront so there are no surprises.</p>
+        </div>
+      </details>
+      <details class="home-faq-section__item">
+        <summary class="home-faq-section__question">
+          <span class="home-faq-section__question-text">What areas do you serve?</span>
+          <span class="home-faq-section__icon"></span>
+        </summary>
+        <div class="home-faq-section__answer">
+          <p>Keystone Legal serves clients across the state, with a primary focus on metropolitan and suburban real estate markets. Contact our office to confirm coverage in your specific county or region.</p>
+        </div>
+      </details>
+    </div>
+    <div class="home-faq-section__cta">
+      <p class="home-faq-section__cta-text">Still have questions? We're here to help.</p>
+      <a href="/contact" class="btn-primary">Contact Us</a>
+    </div>
+  </div>
+  <div class="home-faq-section__decoration" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" fill="none" stroke="#c9a96e" stroke-width="1.5"><path d="M20 4L4 16v20h12v-8h8v8h12V16L20 4z"></path></svg>
+  </div>
+</section>
+
+<section data-band-index="8" id="cta" class="home-cta-section" data-layout-spec="Home-cta">
+  <div class="home-cta-section__container">
+    <!-- START Panel: Vintage Architectural Illustration -->
+    <div class="home-cta-section__illustration-panel">
+      <img loading="lazy" decoding="async" data-placeholder="home-cta-decorative-1" data-context="Detailed pencil or ink illustration of a classic two-story American residential home with a front porch, mature trees on either side, and a manicured front lawn — rendered in a vintage architectural sketch style. Composition: eye-level, straight-on architectural illustration, full facade visible. Framing: occupies the START half of the band, centered vertically. Background: warm parchment/cream section background. Treatment: none" data-treatment="none" data-dominant-color="#c8b89a" data-aspect-ratio="4:3" alt="Vintage architectural sketch of a classic two-story home" width="800" height="600" src="/assets/site-home-cta-decorative-1.webp" class="home-cta-section__illustration-img">
+      <!-- Decorative subtle house motif SVG -->
+      <svg class="home-cta-section__decorative-motif" data-element-type="icon" data-icon-type="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z"></path>
+        <path d="M9 21V12h6v9"></path>
+      </svg>
+    </div>
+
+    <!-- END Panel: Content & Form -->
+    <div class="home-cta-section__content-panel">
+      <p class="home-cta-section__eyebrow">LET'S BUILD WHAT'S NEXT.</p>
+      <h2 class="home-cta-section__headline">Your Real Estate Goals. Our Legal Expertise.</h2>
+      <p class="home-cta-section__body">Whether you're buying your first home, growing your portfolio, or closing a complex deal—we're here to help.</p>
+      
+      <a href="#contact" class="home-cta-section__cta-btn btn-dark-teal">
+        SCHEDULE A CONSULTATION 
+        <svg class="home-cta-section__cta-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 10h12M12 6l4 4-4 4"></path></svg>
+      </a>
+
+      <div class="home-cta-section__phone">
+        <svg class="home-cta-section__phone-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+        <span class="home-cta-section__phone-number">(303) 555-0198</span>
+      </div>
+
+      <!-- Contact Form -->
+      <div class="home-cta-section__form-card">
+        <h3 class="home-cta-section__form-title">Get in Touch</h3>
+        <form class="contact-form home-cta-section__form">
+          <div class="home-cta-section__form-row">
+            <div class="home-cta-section__form-group">
+              <label for="cta-name" class="home-cta-section__form-label">Full Name</label>
+              <input type="text" id="cta-name" name="name" placeholder="John Doe" class="home-cta-section__form-input" required="">
+            </div>
+            <div class="home-cta-section__form-group">
+              <label for="cta-email" class="home-cta-section__form-label">Email Address</label>
+              <input type="email" id="cta-email" name="email" placeholder="john@example.com" class="home-cta-section__form-input" required="">
+            </div>
+          </div>
+          <div class="home-cta-section__form-group">
+            <label for="cta-phone" class="home-cta-section__form-label">Phone Number</label>
+            <input type="tel" id="cta-phone" name="phone" placeholder="(555) 123-4567" class="home-cta-section__form-input">
+          </div>
+          <div class="home-cta-section__form-group">
+            <label for="cta-message" class="home-cta-section__form-label">Message</label>
+            <textarea id="cta-message" name="message" rows="4" placeholder="Tell us about your real estate legal needs..." class="home-cta-section__form-textarea" required=""></textarea>
+          </div>
+          
+          <div class="privacy-consent home-cta-section__privacy-consent">
+            <label class="home-cta-section__privacy-label">
+              <input type="checkbox" name="privacy_consent" class="home-cta-section__privacy-checkbox" required="">
+              <span>I have read and agree to the <a href="/terms" target="_blank">Terms &amp; Conditions</a> and <a href="/privacy" target="_blank">Privacy Policy</a></span>
+            </label>
+          </div>
+
+          <button type="submit" class="home-cta-section__form-btn btn-dark-teal">
+            SEND MESSAGE
+            <svg class="home-cta-section__cta-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 10h12M12 6l4 4-4 4"></path></svg>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+  </main>
+  
+  <footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-grid">
+      <!-- Company Info -->
+      <div class="footer-col footer-brand-col">
+        <img src="/assets/keystone-legal-legal-services-logo.webp" alt="Keystone Legal" class="logo" />
+        <p class="footer-tagline">Strategic counsel for complex property and real estate matters. Rooted in precision, built on trust.</p>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="footer-col footer-links-col">
+        <h4>Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="#features">Why Us</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#testimonials">Testimonials</a></li>
+          <li><a href="#stats">Track Record</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#team">Attorneys</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="footer-col footer-contact-col">
+        <h4>Contact</h4>
+        <ul class="footer-contact">
+          <li>
+            <span class="contact-icon"><i class="fas fa-envelope"></i></span>
+            <span class="contact-text"><a href="mailto:[business_email]">[business_email]</a></span>
+          </li>
+          <li>
+            <span class="contact-icon"><i class="fas fa-phone"></i></span>
+            <span class="contact-text"><a href="tel:[business_phone]">[business_phone]</a></span>
+          </li>
+          <li><a href="/"><span class="contact-icon"><i class="fas fa-map-marker-alt"></i></span>
+            <span class="contact-text">[business_address]</span></a></li>
+        </ul>
+      </div>
+
+      <!-- Business Hours -->
+      <div class="footer-col footer-hours-col">
+        <h4>Opening Hours</h4>
+        <ul class="footer-hours">
+          <li><a href="/"><span class="hours-day">Mon–Fri</span> <span class="hours-time">09:00–18:00</span></a></li>
+          <li><a href="/"><span class="hours-day">Sat</span> <span class="hours-time">09:00–13:00</span></a></li>
+          <li><a href="/"><span class="hours-day">Sun</span> <span class="hours-time">Closed</span></a></li>
+        </ul>
+      </div>
+
+      <!-- Social Media -->
+      <div class="footer-col footer-social-col">
+        <h4>Follow Us</h4>
+        <div class="footer-social">
+          <a href="#" aria-label="Facebook" data-zappy-social-placeholder="true"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" aria-label="Instagram" data-zappy-social-placeholder="true"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="WhatsApp" data-zappy-social-placeholder="true"><i class="fab fa-whatsapp"></i></a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="footer-bottom">
+      <div class="footer-bottom-left">
+        <p class="footer-copyright">© 2026 Keystone Legal. All rights reserved.</p>
+      </div>
+      <div class="footer-bottom-right">
+        <nav class="footer-legal">
+          <a href="/privacy">Privacy Policy</a>
+          <a href="/terms">Terms &amp; Conditions</a>
+          <a href="/accessibility">Accessibility</a>
+        </nav>
+        <a href="https://zappy5.com" target="_blank" class="zappy-attribution">Generated by Zappy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+  
+  <a href="https://wa.me/[whatsapp_handle]" class="whatsapp-float" aria-label="WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+  
+  <div data-integration="accessibility:toolbar"></div>
+
+    <script src="/script.js"></script>
+
+    <script id="zappy-mobile-submenu-script">
+    (function() {
+      function initMobileSubmenuToggles() {
+        if (window.innerWidth > 768) {
+          document.querySelectorAll('.mobile-submenu-toggle').forEach(function(btn) { btn.remove(); });
+          document.querySelectorAll('.sub-menu.mobile-expanded').forEach(function(menu) { menu.classList.remove('mobile-expanded'); });
+          return;
+        }
+        var items = document.querySelectorAll('.nav-menu li:has(.sub-menu), nav li:has(.sub-menu), .navbar li:has(.sub-menu), #navMenu li:has(.sub-menu)');
+        items.forEach(function(li) {
+          if (li.querySelector('.mobile-submenu-toggle')) return;
+          var submenu = li.querySelector('.sub-menu');
+          var parentLink = li.querySelector(':scope > a');
+          if (!submenu || !parentLink) return;
+          var toggleBtn = document.createElement('button');
+          toggleBtn.className = 'mobile-submenu-toggle';
+          toggleBtn.setAttribute('aria-label', 'Toggle submenu');
+          toggleBtn.setAttribute('type', 'button');
+          parentLink.insertAdjacentElement('afterend', toggleBtn);
+          toggleBtn.addEventListener('click', function(e) {
+            e.preventDefault(); e.stopPropagation();
+            document.querySelectorAll('.sub-menu.mobile-expanded').forEach(function(menu) {
+              if (menu !== submenu) { menu.classList.remove('mobile-expanded'); var t = menu.parentElement.querySelector('.mobile-submenu-toggle'); if(t) t.classList.remove('expanded'); }
+            });
+            submenu.classList.toggle('mobile-expanded');
+            toggleBtn.classList.toggle('expanded');
+          });
+        });
+      }
+      if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', initMobileSubmenuToggles); }
+      else { initMobileSubmenuToggles(); }
+      var resizeTimer; window.addEventListener('resize', function() { clearTimeout(resizeTimer); resizeTimer = setTimeout(initMobileSubmenuToggles, 250); });
+      // Re-initialize when mobile menu becomes visible (MutationObserver)
+      var observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+          if (mutation.type === 'attributes') {
+            var target = mutation.target;
+            if (target.classList && (target.classList.contains('active') || target.classList.contains('open'))) {
+              setTimeout(initMobileSubmenuToggles, 100);
+            }
+          }
+        });
+      });
+      setTimeout(function() {
+        document.querySelectorAll('.mobile-menu, .nav-menu, #navMenu, nav').forEach(function(menu) {
+          observer.observe(menu, { attributes: true, attributeFilter: ['class', 'style'] });
+        });
+      }, 500);
+    })();
+    </script>
+</body>
+</html>

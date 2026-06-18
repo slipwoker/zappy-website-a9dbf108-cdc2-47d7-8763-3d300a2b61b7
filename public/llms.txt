@@ -1,0 +1,69 @@
+# Keystone Legal — Generative Engine Optimization Map
+
+> A law firm specializing in real estate legal services, offering professional legal counsel and representation for real estate transactions, disputes, and related matters. The firm aims to project trust, authority, and expertise in the real estate sector.
+
+---
+
+## Pages
+
+### Home
+https://keystone-legal-a9dbf108.zappy5.app
+Protect your biggest investment with affordable legal services from Keystone Legal. Expert real estate law counsel for transactions, disputes, and more. Get a free consultation today.
+
+## Legal & Policy
+
+### Privacy Policy
+https://keystone-legal-a9dbf108.zappy5.app/privacy
+Information about how user data is collected, stored, and protected.
+
+### Terms & Conditions
+https://keystone-legal-a9dbf108.zappy5.app/terms
+Legal terms describing service usage, rights, and policies.
+
+### Accessibility Statement
+https://keystone-legal-a9dbf108.zappy5.app/accessibility
+Information about WCAG compliance and accessibility features.
+
+---
+
+## How to Contact Us
+
+- (No contact details configured yet.)
+
+### Contact form
+- URL: https://keystone-legal-a9dbf108.zappy5.app
+- Endpoint: https://keystone-legal-a9dbf108.zappy5.app/api/email/contact-form
+- Method: POST
+- Content-Type: application/json
+- Fields:
+  - `name` (text, required)
+  - `email` (email, required)
+  - `phone` (tel)
+  - `message` (textarea, required)
+  - `privacy_consent` (checkbox, required)
+
+---
+
+# Business Context (for LLM understanding)
+
+## About Keystone Legal
+A law firm specializing in real estate legal services, offering professional legal counsel and representation for real estate transactions, disputes, and related matters. The firm aims to project trust, authority, and expertise in the real estate sector.
+
+## Services/Products
+- real estate law
+
+## Target Audience
+- First-time Homebuyers
+- Real Estate Investors
+- Real Estate Agents
+
+## Industry
+Legal Services
+
+---
+
+# Machine-readable feeds
+
+- Sitemap (XML): https://keystone-legal-a9dbf108.zappy5.app/sitemap.xml
+- Robots: https://keystone-legal-a9dbf108.zappy5.app/robots.txt
+- Flattened page text (for LLMs): https://keystone-legal-a9dbf108.zappy5.app/llms-full.txt
